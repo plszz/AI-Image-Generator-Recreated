@@ -1,0 +1,52 @@
+@import '~bootstrap/scss/bootstrap';
+
+#mainTitle-section {
+    text-align: center;
+}
+
+#mainContent-section {
+    display: flex;
+    justify-content: center;
+    background-color: lightgray;
+    gap: 5px;
+
+    #generationDisplay-div {
+        .imageDisplay-div {
+            min-height: 500px;
+            min-width: 500px;
+            border: solid black 3px;
+            background-color: bisque;
+        }
+    }
+
+    #generationSettings-div {
+        .textInput-div {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 5px;
+        }
+
+        .rangeInput-div {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            align-items: center;
+            gap: 5px;
+
+            input {text-align: center;}
+        }
+
+        .selectorInput-div {
+            display: grid;
+            grid-template-columns: 1fr 3fr 2fr;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .switchInput-div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+    }
+}
+
