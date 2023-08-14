@@ -1,7 +1,8 @@
-export default async function getInfo(apiLink) {
-
+export default async function getModels() {
+  let apiLink = "https://stablehorde.net/api/v2/status/models"
   console.log("Getting data from " + apiLink)
 
+  //Fetching info
   let response = await fetch(apiLink)
   response = await response.json()
 
@@ -9,6 +10,7 @@ export default async function getInfo(apiLink) {
   return response
 }
 
+{
 // import {useState, useEffect} from 'react'
 
 // export default async function getInfo(apiLink) {
@@ -28,3 +30,4 @@ export default async function getInfo(apiLink) {
 
 //       return
 // }
+}

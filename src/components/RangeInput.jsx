@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 
-export default function RangeInput({field, fieldName, base, min, max}) {
-    const [value, setValue] = useState(base)
+export default function RangeInput({field, fieldName, min, max, step, fieldValue, settingsCallback}) {
 
     // https://www.npmjs.com/package/react-bootstrap-range-slider/v/1.2.2
 
@@ -13,13 +11,17 @@ export default function RangeInput({field, fieldName, base, min, max}) {
             <Form.Range 
                 min = {min}
                 max = {max}
-                value = {value}
+                step = {step}
+                value = {fieldValue}
                 name={`${fieldName}Input`}
                 id = {`${fieldName}Input-range`}
-                onChange = {e => setValue(e.target.value)}
+                onChange={e => {
+                    settingsCallback({[fieldName]:e.target.value})
+                    }
+                }
             />
 
-            <input type='number' value={value} min={min} max={max} onChange={e => setValue(e.target.value)}/>
+            <input type='number' value={fieldValue} min={min} max={max} onChange={e => settingsCallback({[fieldName]:e.target.value})}/>
         </div>
     )
 }

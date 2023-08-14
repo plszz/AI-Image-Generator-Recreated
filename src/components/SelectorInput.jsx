@@ -1,19 +1,19 @@
 import {useState, useEffect} from 'react'
-import getInfo from '../fetch/getInfo'
-import Form from 'react-bootstrap/Form';
+import getModels from '../fetch/getModels'
 import Select from 'react-select';
 
-export default function SelectInput({field, fieldName, apiLink}) {
+export default function SelectInput({field, fieldName, apiLink, settingsCallback}) { //Re add APILINK when post-processor
     const [data, setData] = useState()
-    const [selection, setSelection] = useState()
     
     useEffect(() => {
         (async function getData() {
-            let tempData = await getInfo(apiLink)
+            //Saving response
+            let res = await getModels(), tempArray = []
 
-            let tempArray = []
-            for (let i=0;i<tempData.length;i++) tempArray.push({label: tempData[i].name, value: tempData[i].name})
+            //Converting to selector option elements
+            for (let i=0;i<res.length;i++) tempArray.push({label: res[i].name, value: res[i].name})
 
+            //Updating selector options
             setData(tempArray)
         })()                
     }, [])
@@ -24,12 +24,15 @@ export default function SelectInput({field, fieldName, apiLink}) {
         <div className={`${fieldName}Input-div selectorInput-div`}>
             <label htmlFor={`${fieldName}Input`}>{field}:</label>
 
-            <Select
+            <Select //Lacks local useState update!!!
                 options={data}
-                onChange={opt => {setSelection(opt.value); console.log(opt.value)}}
+                onChange={e => {
+                    let value=e.value
+                    settingsCallback({[fieldName]:value})
+                    }
+                }
             />
         </div>
-
         )
     }
     

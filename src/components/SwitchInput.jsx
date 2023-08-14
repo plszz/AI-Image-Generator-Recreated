@@ -1,10 +1,6 @@
-import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 
-export default function SwitchInput({field, fieldName, baseCheck}) {
-    const [check, setCheck] = useState(!baseCheck? true : false)
-
-    // https://www.npmjs.com/package/react-bootstrap-range-slider/v/1.2.2
+export default function SwitchInput({field, fieldName, fieldCheck, settingsCallback}) {
 
     return (
         <div className={`${fieldName}Input-div switchInput-div`}>
@@ -14,7 +10,11 @@ export default function SwitchInput({field, fieldName, baseCheck}) {
                 type="switch"
                 name={`${fieldName}Input`}
                 id={`${fieldName}Input-switch`}
-                onChange = {(e) => {setCheck(!check); console.log(check)}}
+                onChange={e => {
+                    settingsCallback({[fieldName]:e.target.checked})
+                    }
+                }
+                checked={fieldCheck}
             />
         </div>
     )

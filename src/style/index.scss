@@ -1,51 +1,120 @@
 @import '~bootstrap/scss/bootstrap';
 
-#mainTitle-section {
-    text-align: center;
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: cadetblue;
+    padding: 10px 0;
 }
 
-#mainContent-section {
-    display: flex;
-    justify-content: center;
+#root {
     background-color: lightgray;
-    gap: 5px;
+    max-width: 710px;
+    min-width: 400px;
+    padding: 10px 0;
+    border: solid black 3px;
+    border-radius: 15px;
 
-    #generationDisplay-div {
-        .imageDisplay-div {
-            min-height: 500px;
-            min-width: 500px;
-            border: solid black 3px;
-            background-color: bisque;
-        }
+
+    #mainTitle-section {
+        text-align: center;
+        padding: 5px 15px;
+        margin: 0 auto;
+        background-color: white;
+        width: fit-content;
     }
-
-    #generationSettings-div {
-        .textInput-div {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 5px;
+    
+    #mainContent-section {
+        display: flex;
+        justify-content: center;
+        flex-direction: column-reverse;
+        margin: 0 auto;
+        padding:1rem;
+        gap: 5px;
+    
+    
+        #generationSettings-div {
+            padding: 5px 25px;
+            display: flex;
+            flex-direction: column;
+            gap:5px;
+    
+            .textInput-div {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 5px;
+            }
+    
+            .rangeInput-div {
+                display: grid;
+                grid-template-columns: 1fr 2fr 1fr;
+                align-items: center;
+                gap: 5px;
+    
+                input {text-align: center;}
+            }
+    
+            .selectorInput-div {
+                display: grid;
+                grid-template-columns: 1fr 3fr 2fr;
+                align-items: center;
+                gap: 5px;
+            }
+    
+            .switchInput-div {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+            }
         }
-
-        .rangeInput-div {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            align-items: center;
-            gap: 5px;
-
-            input {text-align: center;}
+    
+        #generationDisplay-div {
+            
+            .imageDisplay-div {
+                min-height: 500px;
+                min-width: 100%;
+                border: solid black 3px;
+                background-color: bisque;
+    
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .carousel, .slide {
+                    width: 100%;
+                    height: 100%;
+                    
+                    .carousel-inner{
+                        .carousel-item {
+                            img {
+                                width: 100%;
+                                position: relative;
+                                object-position: center;
+                                object-fit: scale-down;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            .controlDisplay-div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap:20px;
+                padding:5px;
+            }
         }
+    }    
+}
 
-        .selectorInput-div {
-            display: grid;
-            grid-template-columns: 1fr 3fr 2fr;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .switchInput-div {
+@media screen and (min-width:1000px) {
+    #root {
+        max-width: 1024px;
+        #mainContent-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5px;
         }
     }
 }
