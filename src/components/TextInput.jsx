@@ -1,15 +1,20 @@
 import Form from 'react-bootstrap/Form'
+import TooltipDisplay from './TooltipDisplay'
 
-export default function TextInput({field, fieldName, fieldValue, settingsCallback}) {
+export default function TextInput({field, fieldName, fieldValue, settingsCallback, tooltipInfo}) {
     return (
         
         <Form.Group className={`${fieldName}Input-div textInput-div`}>
-            <Form.Label htmlFor={`${fieldName}Input`}>{field}:</Form.Label>
+            <Form.Label htmlFor={`${fieldName}Input`}>
+                {field}
+                {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
+            </Form.Label>
+
             <Form.Control 
                 as="textarea" 
                 name={`${fieldName}Input`} 
                 onChange={e => {settingsCallback({[fieldName]:e.target.value})}}
-                placeholder={`${field} goes here`}
+                placeholder={`${field} goes here.. ${field === "Prompt" ? "" : "(Optional)"}`}
                 value={fieldValue}
             />
         </Form.Group>

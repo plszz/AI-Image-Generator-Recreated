@@ -1,11 +1,15 @@
 import Form from 'react-bootstrap/Form';
+import TooltipDisplay from './TooltipDisplay';
 
-export default function RangeInput({field, fieldName, min, max, step, fieldValue, settingsCallback, disabled}) {
+export default function RangeInput({field, fieldName, min, max, step, fieldValue, settingsCallback, disabled, tooltipInfo}) {
     // https://www.npmjs.com/package/react-bootstrap-range-slider/v/1.2.2
 
     return (
         <div className={`${fieldName}Input-div rangeInput-div`}>
-            <label htmlFor={`${fieldName}Input`}>{field}:</label>
+            <label htmlFor={`${fieldName}Input`}>
+                {field}
+                {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
+            </label>
 
             <Form.Range 
                 min = {min}

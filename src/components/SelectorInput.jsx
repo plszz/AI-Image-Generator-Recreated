@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react'
 import getModels from '../fetch/getModels'
 import Select from 'react-select';
+import TooltipDisplay from './TooltipDisplay';
 
-export default function SelectInput({field, fieldName, apiLink, defaultOption, settingsCallback}) { //Re add APILINK when post-processor
+export default function SelectInput({field, fieldName, apiLink, defaultOption, settingsCallback, tooltipInfo}) { //Re add APILINK when post-processor
     const [data, setData] = useState()
     
     useEffect(() => {
@@ -22,10 +23,14 @@ export default function SelectInput({field, fieldName, apiLink, defaultOption, s
     
     return (
         <div className={`${fieldName}Input-div selectorInput-div`}>
-            <label htmlFor={`${fieldName}Input`}>{field}:</label>
+            <label htmlFor={`${fieldName}Input`}>
+                {field}
+                {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
+            </label>
 
             <Select //Lacks local useState update!!!
                 options={data}
+                menuPlacement = "auto"
                 value = { //Setting default option
                     data && data.filter(option => 
                     option.label === defaultOption)

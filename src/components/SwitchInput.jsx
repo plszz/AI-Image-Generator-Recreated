@@ -1,10 +1,14 @@
 import Form from 'react-bootstrap/Form';
+import TooltipDisplay from './TooltipDisplay';
 
-export default function SwitchInput({field, fieldName, fieldCheck, settingsCallback}) {
+export default function SwitchInput({field, fieldName, fieldCheck, settingsCallback, tooltipInfo}) {
 
     return (
         <div className={`${fieldName}Input-div switchInput-div`}>
-            <label htmlFor={`${fieldName}Input`}>{field}:</label>
+            <label htmlFor={`${fieldName}Input`}>
+                {field}
+                {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
+            </label>
 
             <Form.Check // prettier-ignore
                 type="switch"

@@ -5,7 +5,7 @@ const durationData = {
     processing:0,
     finished:0,
     restarted:0,
-    failed:0
+    faulted:false
   }
 
 export default durationData

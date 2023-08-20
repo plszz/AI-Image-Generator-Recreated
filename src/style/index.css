@@ -11971,25 +11971,28 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.tooltip-inner {
+  background-color: #212529 !important;
+  border: 1px solid #adb5bd;
+  color: #cfd3dc;
+}
+
 body {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: cadetblue;
+  flex-direction: column;
+  background-color: #212529;
   padding: 10px 0;
 }
 
 #root {
-  background-color: lightgray;
-  max-width: 710px;
-  min-width: 375px;
-  padding: 10px 0;
-  border: solid black 3px;
-  border-radius: 15px;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
-#root #mainTitle-section {
+#root #mainTitle-section, #root #mainFooter-section {
   text-align: center;
   padding: 5px 15px;
   margin: 0 auto;
@@ -11997,29 +12000,53 @@ body {
   width: -moz-fit-content;
   width: fit-content;
   border-radius: 15px;
-  border: solid black 2px;
+  border: solid #adb5bd 1px;
+}
+#root #mainTitle-section h6, #root #mainTitle-section .h6, #root #mainFooter-section h6, #root #mainFooter-section .h6 {
+  margin: 0 !important;
 }
 #root #mainContent-section {
+  background-color: #343a40;
+  max-width: 640px;
+  min-width: 375px;
+  padding: 10px 0;
+  border: solid #adb5bd 1px;
+  border-radius: 15px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  height: -moz-min-content;
+  height: min-content;
   display: flex;
   justify-content: center;
   flex-direction: column-reverse;
-  margin: 0 auto;
   padding: 1rem;
   gap: 5px;
 }
 #root #mainContent-section #generationSettings-div {
-  padding: 0px 15px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
 }
 #root #mainContent-section #generationSettings-div label {
+  color: #cfd3dc;
   font-size: large;
+}
+#root #mainContent-section #generationSettings-div svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+}
+#root #mainContent-section #generationSettings-div .textInput-div, #root #mainContent-section #generationSettings-div .rangeInput-div, #root #mainContent-section #generationSettings-div .selectorInput-div {
+  border-top: 1px solid #adb5bd;
+  padding: 5px 0;
 }
 #root #mainContent-section #generationSettings-div .textInput-div {
   display: grid;
   grid-template-columns: 1fr 3.3fr;
-  gap: 5px;
+  gap: 10px;
+  padding: 10px 0;
+}
+#root #mainContent-section #generationSettings-div .textInput-div:first-child {
+  border-top: none;
+  padding-top: 0;
 }
 #root #mainContent-section #generationSettings-div .textInput-div textarea:not(last-child) {
   min-height: 64px !important;
@@ -12041,18 +12068,31 @@ body {
   grid-template-columns: 1fr 3fr;
   align-items: center;
   gap: 5px;
+  padding: 10px 0;
+  border-bottom: 1px solid #adb5bd;
 }
-#root #mainContent-section #generationSettings-div .switchInput-div {
+#root #mainContent-section #generationSettings-div .switchInputContainer-div {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 5px;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+}
+#root #mainContent-section #generationSettings-div .switchInputContainer-div > div {
+  margin-top: 2.5px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
+}
+#root #mainContent-section #generationSettings-div .switchInputContainer-div > div label {
+  min-width: 92px;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div {
   display: inline-block;
   position: relative;
   width: 100%;
-  border: solid black 3px;
-  background-color: bisque;
+  border: solid #adb5bd 1px;
+  border-radius: 5px;
+  background: radial-gradient(circle, hsl(211, 12%, 37%) 0%, hsl(210, 10%, 23%) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12062,8 +12102,12 @@ body {
   left: 0;
   right: 0;
 }
+#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-control-next, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-control-prev, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-indicators, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-control-next, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-control-prev, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-indicators {
+  display: none;
+}
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img {
   width: 100%;
+  height: 100%;
   position: relative;
   -o-object-position: center;
      object-position: center;
@@ -12072,6 +12116,7 @@ body {
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div #statusDisplay-div {
   text-align: center;
+  color: #cfd3dc;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div #statusDisplay-div p {
   margin: 0.5rem;
@@ -12089,12 +12134,34 @@ body {
   font-size: large;
 }
 
-@media screen and (min-width: 1000px) {
-  #root {
-    max-width: 1024px;
-  }
+@media screen and (min-width: 1025px) {
   #root #mainContent-section {
+    max-width: 1025px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  #root #mainContent-section #generationDisplay-div {
+    display: grid;
+    grid-template-rows: 1fr 41px;
+    gap: 5px;
+  }
+  #root #mainContent-section #generationDisplay-div .controlDisplay-div {
+    margin: 0;
+  }
+}
+@media only screen and (min-width: 490px) {
+  #mainContent-section {
+    margin: 0 15px;
+  }
+  .switchInputContainer-div {
+    max-width: 400px;
+  }
+}
+@media screen and (max-width: 440px) {
+  .switchInputContainer-div {
+    display: grid;
+    grid-template-columns: 60% !important;
+    gap: 15px 20px;
   }
 }/*# sourceMappingURL=index.css.map */

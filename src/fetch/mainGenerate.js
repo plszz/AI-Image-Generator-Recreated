@@ -2,7 +2,7 @@ import { imageGenerate } from "./imageGenerate.js"
 import { checkGenerate } from "./checkGenerate.js"
 import { statusGenerate } from "./statusGenerate.js"
 
-const apiKey = "L15qrkaHUZU7qbAUlkIlXA"
+const apiKey = "L15qrkaHUZU7qbAUlkIlXA" //L15qrkaHUZU7qbAUlkIlXA
 
 export default async function mainGenerate(inputData, displayCallback, cancelGenerationRequestCall) {
     console.log(inputData)
@@ -30,8 +30,6 @@ export default async function mainGenerate(inputData, displayCallback, cancelGen
         else throw new Error (imageData.message)
 
     } catch(error) {
-        console.log(error)
-        alert(error)
-        cancelGenerationRequestCall()
+        return error
     }
 }

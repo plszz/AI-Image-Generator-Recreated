@@ -18,7 +18,7 @@ export async function imageGenerate(apiKey, dataInput) {
             "tiling": dataInput.tiling,
             "hires_fix": dataInput.hiResFix,
             "clip_skip": parseInt(dataInput.clipSkip),
-            "sampler_name": "k_euler",
+            "sampler_name": "k_euler", // k_heun
             "steps": parseInt(dataInput.steps),
             "n": 1
             },
