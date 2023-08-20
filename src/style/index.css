@@ -11987,6 +11987,7 @@ body {
   padding: 10px 0;
   border: solid black 3px;
   border-radius: 15px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 #root #mainTitle-section {
   text-align: center;
@@ -11996,6 +11997,7 @@ body {
   width: -moz-fit-content;
   width: fit-content;
   border-radius: 15px;
+  border: solid black 2px;
 }
 #root #mainContent-section {
   display: flex;
@@ -12011,9 +12013,12 @@ body {
   flex-direction: column;
   gap: 5px;
 }
+#root #mainContent-section #generationSettings-div label {
+  font-size: large;
+}
 #root #mainContent-section #generationSettings-div .textInput-div {
   display: grid;
-  grid-template-columns: 1fr 2.8fr;
+  grid-template-columns: 1fr 3.3fr;
   gap: 5px;
 }
 #root #mainContent-section #generationSettings-div .textInput-div textarea:not(last-child) {
@@ -12028,9 +12033,12 @@ body {
 #root #mainContent-section #generationSettings-div .rangeInput-div input {
   text-align: center;
 }
+#root #mainContent-section #generationSettings-div .rangeInput-div input[type=number]::-webkit-inner-spin-button {
+  opacity: 1;
+}
 #root #mainContent-section #generationSettings-div .selectorInput-div {
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
   gap: 5px;
 }
@@ -12051,6 +12059,8 @@ body {
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide {
   position: absolute;
+  left: 0;
+  right: 0;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img {
   width: 100%;

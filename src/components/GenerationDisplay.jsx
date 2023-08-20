@@ -19,7 +19,7 @@ export default function GenerationDisplay({generateButtonClicked, imageData, dur
             </div>
 
             <div className="controlDisplay-div">
-                <button id="generate-button" onClick={generateButtonClicked}>Generate</button>
+                <button id="generate-button" className={`btn ${loading.request ? "btn-danger" : "btn-primary"}`} onClick={generateButtonClicked}>{!loading.request ? "Generate" : "Cancel Request"}</button>
             </div>
         </div>
     )

@@ -25,7 +25,7 @@ export default function GenerationSettings({data, settingsCallback}) {
             <RangeInput field="Guidance" fieldName="guidance" min="1" max="24" fieldValue={data.guidance} settingsCallback={settingsCallback}/>
 
             <RangeInput field="CLIP Skip" fieldName="clipSkip" min="1" max="10" fieldValue={data.clipSkip} settingsCallback={settingsCallback}/>
-
+            
             {/* Models */}
             <SelectorInput field="Model" fieldName="model" defaultOption={data.model} settingsCallback={settingsCallback}/>
 

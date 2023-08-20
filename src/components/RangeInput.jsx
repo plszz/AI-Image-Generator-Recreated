@@ -20,15 +20,22 @@ export default function RangeInput({field, fieldName, min, max, step, fieldValue
                     }
                 }
             />
-
-            <input 
-                type='number' 
+            <Form.Control 
+                type="number"
                 value={fieldValue} 
                 min={min} 
                 max={max} 
                 disabled={disabled} 
                 onChange={e => settingsCallback({[fieldName]:e.target.value})}
             />
+            {/* <input 
+                type='number' 
+                value={fieldValue} 
+                min={min} 
+                max={max} 
+                disabled={disabled} 
+                onChange={e => settingsCallback({[fieldName]:e.target.value})}
+            /> */}
         </div>
     )
 }

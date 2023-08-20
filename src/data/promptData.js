@@ -10,7 +10,7 @@ const promptData = {
     clipSkip:1,
     model:"stable_diffusion",
     hiResFix:false,
-    karras:false,
+    karras:true,
     trustedWorkers:false,
     createVideo:false,
     tiling:false,
