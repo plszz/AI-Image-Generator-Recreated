@@ -12,7 +12,7 @@ body {
 #root {
     background-color: lightgray;
     max-width: 710px;
-    min-width: 400px;
+    min-width: 375px;
     padding: 10px 0;
     border: solid black 3px;
     border-radius: 15px;
@@ -24,6 +24,7 @@ body {
         margin: 0 auto;
         background-color: white;
         width: fit-content;
+        border-radius: 15px;
     }
     
     #mainContent-section {
@@ -36,15 +37,19 @@ body {
     
     
         #generationSettings-div {
-            padding: 5px 25px;
+            padding: 0px 15px;
             display: flex;
             flex-direction: column;
             gap:5px;
     
             .textInput-div {
                 display: grid;
-                grid-template-columns: 1fr 2fr;
+                grid-template-columns: 1fr 2.8fr;
                 gap: 5px;
+                textarea {
+                    &:not(last-child) {min-height: 64px !important;}
+                    // &:last-child {min-height: 32px !important;}
+                }
             }
     
             .rangeInput-div {
@@ -65,25 +70,34 @@ body {
     
             .switchInput-div {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1.5fr 1fr;
                 gap: 5px;
             }
         }
-    
+        
         #generationDisplay-div {
             
             .imageDisplay-div {
-                min-height: 500px;
-                min-width: 100%;
+                display: inline-block;
+                position: relative;
+                width: 100%;
+
+                // min-height: 512px;
+                // min-width: 100%;
                 border: solid black 3px;
                 background-color: bisque;
     
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
                 .carousel, .slide {
-                    width: 100%;
-                    height: 100%;
+                    // https://jsfiddle.net/B8FU8/2441/
+                    position: absolute;
+                    // top: 0;
+                    // bottom: 0;
+                    // left: 0;
+                    // right: 0;
                     
                     .carousel-inner{
                         .carousel-item {
@@ -96,14 +110,28 @@ body {
                         }
                     }
                 }
+
+                #statusDisplay-div {
+                    text-align: center;
+                    p {
+                        margin: 0.5rem
+                    }
+                }
             }
+            .imageDisplay-div:after {
+                content: '';
+                display: block;
+                margin-top:100%;
+            }
+
     
             .controlDisplay-div {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap:20px;
-                padding:5px;
+                margin: 5px 0;
+
+                button {
+                    width: 100%;
+                    font-size: large;
+                }
             }
         }
     }    

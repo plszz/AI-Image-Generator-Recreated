@@ -1,29 +1,26 @@
-// import { useState, useEffect } from "react"
-// import mainGenerate from "../fetch/mainGenerate"
+import CarouselDisplay from './carouselDisplay'
+import DurationDisplay from './DurationDisplay'
 
-// export default function GenerationDisplay({data, getData}) {
-//     const [displayData, setDisplayData] = useState()
-//     const [inputData, setInputData] = useState()
-    
-//     // function displayCallBack(checkData) {
-//     //     console.log(checkData)
-//     // }
-    
-//     async function generateButtonClicked() {
-//         console.log(getData())
-//         // let imageLink = mainGenerate(data, displayCallBack)
-//         // setDisplayData(<img src={imageLink}/>)
-//     }
+import Spinner from 'react-bootstrap/Spinner';
 
-//     useEffect(() => {$("#generate-button").on("click", () => {generateButtonClicked()})},[])
+export default function GenerationDisplay({generateButtonClicked, imageData, durationData, loading}) {
 
-//     return(
-//         <div id="generationDisplay-div">
-//             <div className="imageDisplay-div">{displayData}</div>
-//             <div className="controlDisplay-div">
-//                 <button id="generate-button">Generate</button>
-                
-//             </div>
-//         </div>
-//     )
-// }
+    function determineDisplay() {
+        if (loading.screen) return <Spinner animation="border" />
+        else if (durationData.done || durationData.faulted) return <CarouselDisplay imageData={imageData}/>
+        else if (durationData.done === false) return <DurationDisplay durationData={durationData}/>
+        else return
+    }
+
+    return (
+        <div id="generationDisplay-div">
+            <div className="imageDisplay-div">
+                {determineDisplay()}
+            </div>
+
+            <div className="controlDisplay-div">
+                <button id="generate-button" onClick={generateButtonClicked}>Generate</button>
+            </div>
+        </div>
+    )
+}

@@ -14,7 +14,7 @@ export default function GenerationSettings({data, settingsCallback}) {
 
             {/* SAMPLER GOES HERE */}
 
-            {/* <RangeInput field="Batch Size" fieldName="batchSize" min="1" max="20" fieldValue={data.batchSize} settingsCallback={settingsCallback}/> */}
+            <RangeInput field="Batch Size" fieldName="batchSize" min="1" max="20" fieldValue={data.batchSize} settingsCallback={settingsCallback} disabled={true}/>
 
             <RangeInput field="Steps" fieldName="steps" min="1" max="50" fieldValue={data.steps} settingsCallback={settingsCallback}/>
 
@@ -27,7 +27,7 @@ export default function GenerationSettings({data, settingsCallback}) {
             <RangeInput field="CLIP Skip" fieldName="clipSkip" min="1" max="10" fieldValue={data.clipSkip} settingsCallback={settingsCallback}/>
 
             {/* Models */}
-            <SelectorInput field="Model" fieldName="model" settingsCallback={settingsCallback}/>
+            <SelectorInput field="Model" fieldName="model" defaultOption={data.model} settingsCallback={settingsCallback}/>
 
             {/* POST PROCESSOR GOES HERE */}
             {/* <SelectorInput field="Post Processor" fieldName="postProcessor" apiLink="https://raw.githubusercontent.com/db0/AI-Horde-image-model-reference/main/stable_diffusion.json"/> */}

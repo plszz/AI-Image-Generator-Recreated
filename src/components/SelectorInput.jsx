@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import getModels from '../fetch/getModels'
 import Select from 'react-select';
 
-export default function SelectInput({field, fieldName, apiLink, settingsCallback}) { //Re add APILINK when post-processor
+export default function SelectInput({field, fieldName, apiLink, defaultOption, settingsCallback}) { //Re add APILINK when post-processor
     const [data, setData] = useState()
     
     useEffect(() => {
@@ -26,6 +26,10 @@ export default function SelectInput({field, fieldName, apiLink, settingsCallback
 
             <Select //Lacks local useState update!!!
                 options={data}
+                value = { //Setting default option
+                    data && data.filter(option => 
+                    option.label === defaultOption)
+                 }
                 onChange={e => {
                     let value=e.value
                     settingsCallback({[fieldName]:value})
@@ -35,17 +39,3 @@ export default function SelectInput({field, fieldName, apiLink, settingsCallback
         </div>
         )
     }
-    
-    // const [posts, setPosts] = useState();
-
-    // useEffect(() => {
-    //     async function fetchMyAPI() {
-    //       let response = await fetch(apiLink)
-    //       response = await response.json()
-    //       setPosts(response)
-
-    //       console.log(posts)
-    //     }
-    
-    //     fetchMyAPI()
-    //   }, []) //Brackets only run this once

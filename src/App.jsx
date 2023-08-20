@@ -1,59 +1,84 @@
 import { useState, useEffect } from 'react'
 import jQuery from "jquery"
 window.$ = window.jQuery = jQuery
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from 'react-bootstrap/Carousel'
 
-// import GenerationDisplay from './components/generationDisplay'
-import ControlledCarousel from './components/carouselDisplay'
-import GenerationSettings from './components/generationSettings'
+import GenerationDisplay from './components/generationDisplay'
+import GenerationSettings from './components/GenerationSettings'
 import mainGenerate from "./fetch/mainGenerate"
+
+import promptDataImport from './data/promptData'
+import durationDataImport from './data/durationData'
 
 import "./style/index.css"
 
 export default function App() {
-  const [displayData, setDisplayData] = useState()
-  const [durationDisplay, setDurationDisplay] = useState({
-    wait_time:0,
-    queue_position:0
+  const [imageData, setImageData] = useState()
+  const [loading, setLoading] = useState({
+    screen:false,
+    request:false
   })
-  const [data, setData] = useState({
-    prompt:"",
-    negativePrompt:"",
-    seed:"",
-    batchSize:"1",
-    steps:"30",
-    width:"512",
-    height:"512",
-    guidance:"7",
-    clipSkip:"1",
-    model:"",
-    hiResFix:false,
-    karras:false,
-    trustedWorkers:false,
-    createVideo:false,
-    tiling:false,
-    nsfw:false
-  })
+  const [durationData, setDurationData] = useState(durationDataImport)
+  const [data, setData] = useState(promptDataImport)
 
   function displayCallBack(checkData) {
-    if (checkData.wait_time !== durationDisplay.wait_time) {
-      setDurationDisplay(checkData)
+    setLoading(prevLoad => {
+      return {
+        ...prevLoad,
+        screen:false
+      }
+    })
+    if (checkData !== durationData) {
+      setDurationData({...checkData})
     }
   }
 
-  async function generateButtonClicked() {
-      console.log(data)
-      let imageLinks = await mainGenerate(data, displayCallBack)
-      setDisplayData(imageLinks.map(e => {
-        return (
-          <Carousel.Item>
-            <img alt="Generated picture" src={e.img}/>
-          </Carousel.Item>
-        )
-      }))
+  function cancelGenerationRequestCall() {
+    setLoading({
+      screen:false,
+      request:false
+    })
   }
 
-  // useEffect(() => {$("#generate-button").on("click", () => {generateButtonClicked()})},[])
+  async function generateButtonClicked() {
+    if (!loading.request) {
+      if (data.prompt) {
+  
+        //Image reset and loading animation
+        setImageData("")
+        setLoading(prevLoad => {
+          return {
+            ...prevLoad,
+            screen:true,
+            request:true
+          }
+        })
+  
+        //Waiting for image
+        let imageLinks = await mainGenerate(data, displayCallBack, cancelGenerationRequestCall)
+        
+        try {
+          setImageData(imageLinks.map(e => {
+            return (
+              <Carousel.Item>
+                <img alt="Generated picture" src={e.img}/>
+              </Carousel.Item>
+            )
+          }))
+  
+          setLoading(prevLoad => {
+            return {
+              ...prevLoad,
+              request:false
+            }
+          })
+        }
+        catch(error){console.log(error)}
+      }
+      else alert("Please enter a legitimate prompt!")
+    }
+    else alert("Already making a request! Please wait or refresh the page to cancel.")
+  }
 
   //Settings update on change
   function settingsCallback(value) {
@@ -64,7 +89,6 @@ export default function App() {
       }
     })
   }
-  // useEffect(() => console.log(data))
 
   return (
     <>
@@ -77,18 +101,20 @@ export default function App() {
       {/* Content */}
       <section id="mainContent-section">
         <GenerationSettings data={data} settingsCallback={settingsCallback}/>
-
-        <div id="generationDisplay-div">
-            <div className="imageDisplay-div">
-              <ControlledCarousel displayData={displayData}/>
-            </div>
-            <div className="controlDisplay-div">
-                <button id="generate-button" onClick={generateButtonClicked}>Generate</button>
-                <span id="duration-display">Time left: {durationDisplay.wait_time}</span>
-                <span id="queue-display">Queue position: {durationDisplay.queue_position}</span>
-            </div>
-        </div>
+        <GenerationDisplay generateButtonClicked={generateButtonClicked} imageData={imageData} durationData={durationData} loading={loading}/>
       </section>
     </>
   )
 }
+
+{/* <div id="generationDisplay-div">
+    <div className="imageDisplay-div">
+      <ControlledCarousel imageData={imageData}/>
+      <div>Hello!</div>
+    </div>
+    <div className="controlDisplay-div">
+        <button id="generate-button" onClick={generateButtonClicked}>Generate</button>
+        <span id="duration-display">Time left: {durationData.wait_time}</span>
+        <span id="queue-display">Queue position: {durationData.queue_position}</span>
+    </div>
+</div> */}

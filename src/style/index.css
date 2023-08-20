@@ -11983,7 +11983,7 @@ body {
 #root {
   background-color: lightgray;
   max-width: 710px;
-  min-width: 400px;
+  min-width: 375px;
   padding: 10px 0;
   border: solid black 3px;
   border-radius: 15px;
@@ -11995,6 +11995,7 @@ body {
   background-color: white;
   width: -moz-fit-content;
   width: fit-content;
+  border-radius: 15px;
 }
 #root #mainContent-section {
   display: flex;
@@ -12005,15 +12006,18 @@ body {
   gap: 5px;
 }
 #root #mainContent-section #generationSettings-div {
-  padding: 5px 25px;
+  padding: 0px 15px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 #root #mainContent-section #generationSettings-div .textInput-div {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 2.8fr;
   gap: 5px;
+}
+#root #mainContent-section #generationSettings-div .textInput-div textarea:not(last-child) {
+  min-height: 64px !important;
 }
 #root #mainContent-section #generationSettings-div .rangeInput-div {
   display: grid;
@@ -12032,12 +12036,13 @@ body {
 }
 #root #mainContent-section #generationSettings-div .switchInput-div {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: 5px;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div {
-  min-height: 500px;
-  min-width: 100%;
+  display: inline-block;
+  position: relative;
+  width: 100%;
   border: solid black 3px;
   background-color: bisque;
   display: flex;
@@ -12045,8 +12050,7 @@ body {
   justify-content: center;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide {
-  width: 100%;
-  height: 100%;
+  position: absolute;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img {
   width: 100%;
@@ -12056,12 +12060,23 @@ body {
   -o-object-fit: scale-down;
      object-fit: scale-down;
 }
+#root #mainContent-section #generationDisplay-div .imageDisplay-div #statusDisplay-div {
+  text-align: center;
+}
+#root #mainContent-section #generationDisplay-div .imageDisplay-div #statusDisplay-div p {
+  margin: 0.5rem;
+}
+#root #mainContent-section #generationDisplay-div .imageDisplay-div:after {
+  content: "";
+  display: block;
+  margin-top: 100%;
+}
 #root #mainContent-section #generationDisplay-div .controlDisplay-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 5px;
+  margin: 5px 0;
+}
+#root #mainContent-section #generationDisplay-div .controlDisplay-div button {
+  width: 100%;
+  font-size: large;
 }
 
 @media screen and (min-width: 1000px) {

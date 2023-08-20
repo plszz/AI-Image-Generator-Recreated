@@ -1,5 +1,5 @@
 export async function imageGenerate(apiKey, dataInput) {
-    console.log(dataInput.models)
+    // console.log(dataInput.models)
     const options = {
         method: "POST",
         headers: {
@@ -41,9 +41,12 @@ export async function imageGenerate(apiKey, dataInput) {
 
         return data
     }
-    catch(error) {console.log(error)}
+    catch(error) {
+      console.log(error)
+      return error
+    }
 
-    let test = {
+    {let test = {
         "prompt": dataInput.prompt + (dataInput.negativePrompt? ` ### ${dataInput.negativePrompt}`:""),
         "params": {
           "seed": dataInput.seed,
@@ -87,24 +90,5 @@ export async function imageGenerate(apiKey, dataInput) {
         // "replacement_filter": true,
         // "dry_run": false
       }
+    }
 }
-
-
-//   {
-//     prompt:"",
-//     negativePrompt:"",
-//     seed:"",
-//     batchSize:"1",
-//     steps:"30",
-//     width:"512",
-//     height:"512",
-//     guidance:"7",
-//     clipSkip:"1",
-//     model:"",
-//     hiResFix:false,
-//     karras:false,
-//     trustedWorkers:false,
-//     createVideo:false,
-//     tiling:false,
-//     nsfw:false
-//   }

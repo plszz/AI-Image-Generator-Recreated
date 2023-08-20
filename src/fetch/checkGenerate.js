@@ -10,5 +10,8 @@ export async function checkGenerate(id) {
 
         return data
     }
-    catch (error) {console.log(error)}
+    catch (error) {
+        console.log(error)
+        return error
+    }
 }
