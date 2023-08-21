@@ -13,7 +13,7 @@ export default function GenerationDisplay({resetButtonClicked, generateButtonCli
     }
 
     function resetConfirmationCheck() {
-        if (confirm("This will clear the prompts and set all options to default. Are you sure?")) {
+        if (confirm("This will clear your prompts and change all settings back to default. Are you sure?")) {
             resetButtonClicked()
         }
     }

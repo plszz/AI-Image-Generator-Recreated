@@ -1,16 +1,20 @@
 import { imageGenerate } from "./imageGenerate.js"
 import { checkGenerate } from "./checkGenerate.js"
 import { statusGenerate } from "./statusGenerate.js"
+import { cancelGenerate } from "./cancelGenerate.js"
 
 const apiKey = "L15qrkaHUZU7qbAUlkIlXA" //L15qrkaHUZU7qbAUlkIlXA
 
-export default async function mainGenerate(inputData, displayCallback) {
+export default async function mainGenerate(inputData, displayCallback, updateIdCallback) {
     console.log(inputData)
 
     try {
         //Making initial call
-        const imageData = await imageGenerate(apiKey, inputData)
-        if (imageData.id) {
+        // const imageData = await imageGenerate(apiKey, inputData)
+        // if (imageData.id) {
+
+            // updateIdCallback(id)
+
             let checkData
             do {
                 //Updating display while waiting
@@ -26,8 +30,8 @@ export default async function mainGenerate(inputData, displayCallback) {
                 }
 
             } while(true)
-        }
-        else throw new Error (imageData.message)
+        // }
+        // else throw new Error (imageData.message)
 
     } catch(error) {
         return error
