@@ -4,7 +4,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 export default function TooltipDisplay({tooltipInfo}) {
 
     const renderTooltip = (props) => (
-      <Tooltip id="button-tooltip" {...props}>
+      <Tooltip id="button-tooltip" style={{opacity:1}} {...props}>
         {tooltipInfo}
       </Tooltip>
     );

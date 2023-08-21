@@ -4,7 +4,7 @@ window.$ = window.jQuery = jQuery
 import Carousel from 'react-bootstrap/Carousel'
 
 import GenerationDisplay from './components/generationDisplay'
-import GenerationSettings from './components/GenerationSettings'
+import GenerationSettings from './components/generationSettings'
 import mainGenerate from "./fetch/mainGenerate"
 
 import promptDataImport from './data/promptData'
@@ -41,6 +41,10 @@ export default function App() {
     })
   }
 
+  function resetButtonClicked() {
+    setData(promptDataImport)
+  }
+
   async function generateButtonClicked() {
     if (!loading.request) {
       if (data.prompt) {
@@ -56,7 +60,7 @@ export default function App() {
         })
   
         //Waiting for image
-        let imageLinks = await mainGenerate(data, displayCallBack, cancelGenerationRequestCall)
+        let imageLinks = await mainGenerate(data, displayCallBack)
         
         try {
           if (imageLinks.message) throw new Error
@@ -107,7 +111,7 @@ export default function App() {
       {/* Content */}
       <section id="mainContent-section">
         <GenerationSettings data={data} settingsCallback={settingsCallback}/>
-        <GenerationDisplay generateButtonClicked={generateButtonClicked} imageData={imageData} durationData={durationData} loading={loading}/>
+        <GenerationDisplay resetButtonClicked={resetButtonClicked} generateButtonClicked={generateButtonClicked} imageData={imageData} durationData={durationData} loading={loading}/>
       </section>
 
       {/* Footer */}

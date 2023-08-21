@@ -27,7 +27,7 @@ export default function GenerationSettings({data, settingsCallback}) {
             <RangeInput field="CLIP Skip" fieldName="clipSkip" min="1" max="10" fieldValue={data.clipSkip} settingsCallback={settingsCallback} tooltipInfo={"Last layers of CLIP to ignore. For most situations this can be left alone."}/>
             
             {/* Models */}
-            <SelectorInput field="Model" fieldName="model" defaultOption={data.model} settingsCallback={settingsCallback} tooltipInfo={"Different models can drastically change the style of your image. Keep an eye on the parentheses number beside its name however, as it represents avalible workers. Lower numbers mean much longer generation times."}/>
+            <SelectorInput field="Model" fieldName="model" defaultOption={data.model} settingsCallback={settingsCallback} tooltipInfo={"Different models can drastically change the style of your image. Keep an eye on the number in the parentheses however, as this represents avalible workers. Fewer workers can mean much longer generation times or even potential timeout."}/>
 
             {/* POST PROCESSOR GOES HERE */}
             {/* <SelectorInput field="Post Processor" fieldName="postProcessor" apiLink="https://raw.githubusercontent.com/db0/AI-Horde-image-model-reference/main/stable_diffusion.json"/> */}
@@ -39,11 +39,11 @@ export default function GenerationSettings({data, settingsCallback}) {
 
                 {/* <SwitchInput field="Trusted Workers" fieldName="trustedWorkers" fieldCheck={data.trustedWorkers} settingsCallback={settingsCallback} tooltipInfo={"Whether or not to allow only trusted workers to fulfill your requests."}/> */}
 
-                {/* <SwitchInput field="Create Video" fieldName="createVideo" fieldCheck={data.createVideo} settingsCallback={settingsCallback}/> */}
+                {/* <SwitchInput field="Create Video" fieldName="createVideo" fieldCheck={data.createVideo} settingsCallback={settingsCallback} tooltipInfo={"Generates an interpolated video - requires no extra kudos. Looks great when images are similar to each other! Note: will not be saved in the gallery."}/> */}
 
                 {/* <SwitchInput field="Tiling" fieldName="tiling" fieldCheck={data.tiling} settingsCallback={settingsCallback}/> */}
 
-                <SwitchInput field="NSFW" fieldName="nsfw" fieldCheck={data.nsfw} settingsCallback={settingsCallback} tooltipInfo={"Generated NSFW images will be censored if disabled."}/>
+                {/* <SwitchInput field="NSFW" fieldName="nsfw" fieldCheck={data.nsfw} settingsCallback={settingsCallback} tooltipInfo={"Generated NSFW images will be censored if disabled."}/> */}
 
                 {/* <SwitchInput field="X/Y Plot" fieldName=""/> */}
             </div>

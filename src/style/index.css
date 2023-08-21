@@ -11971,10 +11971,12 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-.tooltip-inner {
+.tooltip:is(.show) {
+  opacity: 1 !important;
+}
+.tooltip .tooltip-inner {
   background-color: #212529 !important;
   border: 1px solid #adb5bd;
-  color: #cfd3dc;
 }
 
 body {
@@ -12044,12 +12046,11 @@ body {
   gap: 10px;
   padding: 10px 0;
 }
-#root #mainContent-section #generationSettings-div .textInput-div:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-#root #mainContent-section #generationSettings-div .textInput-div textarea:not(last-child) {
-  min-height: 64px !important;
+@media screen and (min-width: 1025px) {
+  #root #mainContent-section #generationSettings-div .textInput-div:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
 }
 #root #mainContent-section #generationSettings-div .rangeInput-div {
   display: grid;
@@ -12127,7 +12128,18 @@ body {
   margin-top: 100%;
 }
 #root #mainContent-section #generationDisplay-div .controlDisplay-div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
   margin: 5px 0;
+}
+@media screen and (max-width: 505px) {
+  #root #mainContent-section #generationDisplay-div .controlDisplay-div {
+    grid-template-columns: 1fr;
+  }
+  #root #mainContent-section #generationDisplay-div .controlDisplay-div button:last-child {
+    order: -1;
+  }
 }
 #root #mainContent-section #generationDisplay-div .controlDisplay-div button {
   width: 100%;
@@ -12144,6 +12156,7 @@ body {
   #root #mainContent-section #generationDisplay-div {
     display: grid;
     grid-template-rows: 1fr 41px;
+    max-height: 700px;
     gap: 5px;
   }
   #root #mainContent-section #generationDisplay-div .controlDisplay-div {

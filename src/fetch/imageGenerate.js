@@ -23,7 +23,7 @@ export async function imageGenerate(apiKey, dataInput) {
             "n": 1
             },
             "nsfw": dataInput.nsfw,
-            "censor_nsfw": false,
+            "censor_nsfw": !dataInput.nsfw,
             "trusted_workers": dataInput.trustedWorkers,
             "slow_workers": true,
             "worker_blacklist": false,

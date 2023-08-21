@@ -12,7 +12,8 @@ export default function SelectInput({field, fieldName, apiLink, defaultOption, s
             let res = await getModels(), tempArray = []
 
             //Converting to selector option elements
-            for (let i=0;i<res.length;i++) tempArray.push({label: res[i].name, value: res[i].name})
+            for (let i=0;i<res.length;i++) tempArray.push({label: `${res[i].name} (${res[i].count})`, value: res[i].name, count: res[i].count})
+            tempArray = tempArray.sort((a,b) => {return b.count - a.count})
 
             //Updating selector options
             setData(tempArray)
@@ -32,8 +33,7 @@ export default function SelectInput({field, fieldName, apiLink, defaultOption, s
                 options={data}
                 menuPlacement = "auto"
                 value = { //Setting default option
-                    data && data.filter(option => 
-                    option.label === defaultOption)
+                    data && data.filter(option => option.value === defaultOption)
                  }
                 onChange={e => {
                     let value=e.value

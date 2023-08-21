@@ -4,7 +4,7 @@ import { statusGenerate } from "./statusGenerate.js"
 
 const apiKey = "L15qrkaHUZU7qbAUlkIlXA" //L15qrkaHUZU7qbAUlkIlXA
 
-export default async function mainGenerate(inputData, displayCallback, cancelGenerationRequestCall) {
+export default async function mainGenerate(inputData, displayCallback) {
     console.log(inputData)
 
     try {
