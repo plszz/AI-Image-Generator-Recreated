@@ -37,13 +37,13 @@ export default function GenerationSettings({data, settingsCallback}) {
 
                 <SwitchInput field="Karras" fieldName="karras" fieldCheck={data.karras} settingsCallback={settingsCallback} tooltipInfo={"Improves generation while requiring fewer steps."}/>
 
-                {/* <SwitchInput field="Trusted Workers" fieldName="trustedWorkers" fieldCheck={data.trustedWorkers} settingsCallback={settingsCallback} tooltipInfo={"Whether or not to allow only trusted workers to fulfill your requests."}/> */}
+                <SwitchInput field="Use TW" fieldName="trustedWorkers" fieldCheck={data.trustedWorkers} settingsCallback={settingsCallback} tooltipInfo={"Whether or not to allow only trusted workers to fulfill your requests."}/>
 
                 {/* <SwitchInput field="Create Video" fieldName="createVideo" fieldCheck={data.createVideo} settingsCallback={settingsCallback} tooltipInfo={"Generates an interpolated video - requires no extra kudos. Looks great when images are similar to each other! Note: will not be saved in the gallery."}/> */}
 
                 {/* <SwitchInput field="Tiling" fieldName="tiling" fieldCheck={data.tiling} settingsCallback={settingsCallback}/> */}
 
-                {/* <SwitchInput field="NSFW" fieldName="nsfw" fieldCheck={data.nsfw} settingsCallback={settingsCallback} tooltipInfo={"Generated NSFW images will be censored if disabled."}/> */}
+                <SwitchInput field="NSFW" fieldName="nsfw" fieldCheck={data.nsfw} settingsCallback={settingsCallback} tooltipInfo={"Generated NSFW images will be censored if disabled."}/>
 
                 {/* <SwitchInput field="X/Y Plot" fieldName=""/> */}
             </div>

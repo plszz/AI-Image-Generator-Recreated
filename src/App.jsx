@@ -4,7 +4,7 @@ window.$ = window.jQuery = jQuery
 import Carousel from 'react-bootstrap/Carousel'
 
 import GenerationDisplay from './components/generationDisplay'
-import GenerationSettings from './components/generationSettings'
+import GenerationSettings from './components/GenerationSettings'
 
 import mainGenerate from "./fetch/mainGenerate"
 import { imageGenerate } from "./fetch/imageGenerate.js"
@@ -18,74 +18,86 @@ import { cancelGenerate } from './fetch/cancelGenerate'
 export default function App() {
   const [imageData, setImageData] = useState()
   const [loading, setLoading] = useState({
-    screen:false,
-    request:false,
-    cancel:false
+    showLoadScreen:false,
+    makingRequest:false
   })
   const [id, setId] = useState()
   const [durationData, setDurationData] = useState(durationDataImport)
   const [data, setData] = useState(promptDataImport)
 
-async function generateButtonClicked() {
-  if (!loading.request) {
-    if (data.prompt) {
+  async function generateButtonClicked() {
+    // Already loading? If not, check prompt
+    if (!loading.makingRequest) {
+      if (data.prompt) {
 
-      //Image reset and loading animation
-      setImageData("")
-      setLoading(prevLoad => {
-        return {
-          ...prevLoad,
-          screen:true,
-          request:true
-        }
-      })
-
-      //Making initial call
-      const tempImageData = await imageGenerate("L15qrkaHUZU7qbAUlkIlXA", data)
-      console.log(tempImageData)
-      if (tempImageData.id) updateIdCallback(tempImageData.id)
-      else throw new Error (tempImageData.message)
-
-      //Waiting for image
-      let imageLinks = await mainGenerate(data, displayCallBack, updateIdCallback)
-      
-      try {
-        if (imageLinks.message) throw new Error
-        setImageData(imageLinks.map(e => {
-          return (
-            <Carousel.Item>
-              <img alt="Generated picture" src={e.img}/>
-            </Carousel.Item>
-          )
-        }))
-
+        //Image reset and loading animation
+        setImageData("")
         setLoading(prevLoad => {
           return {
             ...prevLoad,
-            request:false,
-            cancel:false
+            showLoadScreen:true,
+            makingRequest:true
           }
         })
+        
+        try {
+          //Making initial call
+          const tempImageData = await imageGenerate("L15qrkaHUZU7qbAUlkIlXA", data)
+          console.log(tempImageData)
+          
+          //Saving ID
+          if (tempImageData.id) setId(tempImageData.id)
+          else throw new Error (tempImageData.message)
+          
+        }
+        catch (error) {
+          alert(error)
+          resetRequestDisplay()
+        }
       }
-      catch(error){
-        console.log(id)
-        console.log(error)
-        console.log(imageLinks)
-        alert("Error! " + imageLinks.message)
-      }
+      else alert("Please enter a legitimate prompt!")
     }
-    else alert("Please enter a legitimate prompt!")
+    //Call cancelation
+    else if (confirm("This will cancel your request. Are you sure?")) {
+      cancelGenerate(id)
+      resetRequestDisplay()
+    }
   }
-  //Call cancelation
-  else if (confirm("This will cancel your request. Are you sure?")) {
-    setLoading(prevLoading => {return {...prevLoading, request:false}})
-    setDurationData(() => {return {...durationDataImport, faulted:true}})
-    cancelGenerate(id)
-  }
-}
 
-  function updateIdCallback(newId) {
-    setId(newId)
+  //Repeat when ID changes
+  useEffect(() => {
+    console.log(id)
+    async function startCheckProcess() {
+      let tempImageData
+      try {
+        tempImageData = await mainGenerate(id, displayCallBack)
+        if (tempImageData) {
+          setImageData(tempImageData.map(e => {
+            return (
+              <Carousel.Item>
+                <img alt="Generated picture" src={e.img}/>
+              </Carousel.Item>
+            )
+          }))
+        }
+      }
+      catch (error) {
+        console.log(error)
+        console.log(tempImageData.message)
+        Alert(`Error! Request took too long and timed out, check logs for more information... ${error}`)
+      }
+  
+      //Loading screen reset
+      setLoading(prevLoad => {return {...prevLoad, makingRequest:false}})
+    }
+    if (id) startCheckProcess()
+  }, [id])
+
+  // useEffect(() => {})
+
+  function resetRequestDisplay() {
+    setLoading(prevLoading => {return {...prevLoading, makingRequest:false, showLoadScreen:false}})
+    setDurationData(durationDataImport)
   }
 
   // Duration update
@@ -93,7 +105,7 @@ async function generateButtonClicked() {
     setLoading(prevLoad => {
       return {
         ...prevLoad,
-        screen:false
+        showLoadScreen:false
       }
     })
     if (checkData !== durationData) {
@@ -141,109 +153,3 @@ async function generateButtonClicked() {
     </>
   )
 }
-
-{/* <div id="generationDisplay-div">
-    <div className="imageDisplay-div">
-      <ControlledCarousel imageData={imageData}/>
-      <div>Hello!</div>
-    </div>
-    <div className="controlDisplay-div">
-        <button id="generate-button" onClick={generateButtonClicked}>Generate</button>
-        <span id="duration-display">Time left: {durationData.wait_time}</span>
-        <span id="queue-display">Queue position: {durationData.queue_position}</span>
-    </div>
-</div> */}
-
-// async function generateButtonClicked() {
-//   if (!loading.request) {
-//     if (data.prompt) {
-
-//       //Image reset and loading animation
-//       setImageData("")
-//       setLoading(prevLoad => {
-//         return {
-//           ...prevLoad,
-//           screen:true,
-//           request:true
-//         }
-//       })
-
-//       //Waiting for image
-//       let imageLinks = await mainGenerate(data, displayCallBack)
-      
-//       try {
-//         if (imageLinks.message) throw new Error
-//         setImageData(imageLinks.map(e => {
-//           return (
-//             <Carousel.Item>
-//               <img alt="Generated picture" src={e.img}/>
-//             </Carousel.Item>
-//           )
-//         }))
-
-//         setLoading(prevLoad => {
-//           return {
-//             ...prevLoad,
-//             request:false,
-//             cancel:false
-//           }
-//         })
-//       }
-//       catch(error){
-//         console.log(error)
-//         cancelGenerationRequestCall()
-//         alert("Error! " + imageLinks.message)
-//       }
-//     }
-//     else alert("Please enter a legitimate prompt!")
-//   }
-//   else if (confirm("This will cancel your request. Are you sure?")) {
-//     setLoading(prevLoading => {return {...prevLoading, cancel:true}})
-//   }
-// }
-
-// import { imageGenerate } from "./fetch/imageGenerate.js"
-// import { checkGenerate } from "./fetch/checkGenerate.js"
-// import { statusGenerate } from "./fetch/statusGenerate.js"
-// import { cancelGenerate } from "./fetch/cancelGenerate.js"
-
-// const apiKey = "L15qrkaHUZU7qbAUlkIlXA" //L15qrkaHUZU7qbAUlkIlXA
-
-//   function generateButtonClicked() {
-//     setLoading(() => {return {screen:true, request:true}})
-//     console.log(loading)
-//     if (!loading.request) {
-//       if (data.prompt) {
-  
-//         // Image reset and loading animation
-//         setImageData("")
-
-//         // Load icon until response
-//         console.log(loading)
-
-        
-//         setLoading(prevLoad => {
-//           return {
-//             ...prevLoad,
-//             request:false,
-//             cancel:false
-//           }
-//         })
-//         console.log(loading)
-
-
-//         fetchGenerationRequestLoop()
-    
-//         Reseting load visuals
-//         setLoading({
-//           screen:false,
-//           request:false,
-//           cancel:false
-//         })
-//       }
-//       else alert("Please enter a legitimate prompt!")
-//     }
-//     else if (confirm("This will cancel your request. Are you sure?")) {
-//       setLoading(prevLoading => {return {...prevLoading, cancel:true}})
-//     }
-//   }

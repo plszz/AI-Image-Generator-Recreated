@@ -6,8 +6,8 @@ import Spinner from 'react-bootstrap/Spinner';
 export default function GenerationDisplay({resetButtonClicked, generateButtonClicked, imageData, durationData, loading}) {
 
     function determineDisplay() {
-        if (loading.screen) return <Spinner animation="border" variant="light"/>
-        else if (durationData.done || durationData.faulted) return <CarouselDisplay imageData={imageData}/>
+        if (loading.showLoadScreen) return <Spinner animation="border" variant="light"/>
+        else if (durationData.done && !durationData.faulted) return <CarouselDisplay imageData={imageData}/>
         else if (durationData.done === false) return <DurationDisplay durationData={durationData}/>
         else return
     }
@@ -26,7 +26,7 @@ export default function GenerationDisplay({resetButtonClicked, generateButtonCli
 
             <div className="controlDisplay-div">
                 <button id="generate-button" className={`btn btn-danger`} onClick={resetConfirmationCheck}>Reset Settings</button>
-                <button id="generate-button" className={`btn ${loading.request ? "btn-danger" : "btn-primary"}`} onClick={generateButtonClicked}>{!loading.request ? "Generate" : "Cancel Request"}</button>
+                <button id="generate-button" className={`btn ${loading.makingRequest ? "btn-danger" : "btn-primary"}`} onClick={generateButtonClicked}>{!loading.makingRequest ? "Generate" : "Cancel Request"}</button>
             </div>
         </div>
     )

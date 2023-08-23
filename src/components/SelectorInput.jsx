@@ -3,7 +3,7 @@ import getModels from '../fetch/getModels'
 import Select from 'react-select';
 import TooltipDisplay from './TooltipDisplay';
 
-export default function SelectInput({field, fieldName, apiLink, defaultOption, settingsCallback, tooltipInfo}) { //Re add APILINK when post-processor
+export default function SelectInput({field, fieldName, defaultOption, settingsCallback, tooltipInfo}) {
     const [data, setData] = useState()
     
     useEffect(() => {
