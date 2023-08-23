@@ -74,7 +74,7 @@ export default function App() {
         if (tempImageData) {
           setImageData(tempImageData.map(e => {
             return (
-              <Carousel.Item>
+              <Carousel.Item key="">
                 <img alt="Generated picture" src={e.img}/>
               </Carousel.Item>
             )
@@ -83,8 +83,7 @@ export default function App() {
       }
       catch (error) {
         console.log(error)
-        console.log(tempImageData.message)
-        Alert(`Error! Request took too long and timed out, check logs for more information... ${error}`)
+        if (tempImageData.message) alert(tempImageData.message)
       }
   
       //Loading screen reset
@@ -93,8 +92,6 @@ export default function App() {
     if (id) startCheckProcess()
   }, [id])
 
-  // useEffect(() => {})
-
   function resetRequestDisplay() {
     setLoading(prevLoading => {return {...prevLoading, makingRequest:false, showLoadScreen:false}})
     setDurationData(durationDataImport)
@@ -102,12 +99,14 @@ export default function App() {
 
   // Duration update
   function displayCallBack(checkData) {
-    setLoading(prevLoad => {
-      return {
-        ...prevLoad,
-        showLoadScreen:false
-      }
-    })
+    if (loading.showLoadScreen) {
+      setLoading(prevLoad => {
+        return {
+          ...prevLoad,
+          showLoadScreen:false
+        }
+      })
+    }
     if (checkData !== durationData) {
       setDurationData({...checkData})
     }
