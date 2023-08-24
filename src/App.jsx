@@ -4,91 +4,117 @@ window.$ = window.jQuery = jQuery
 import Carousel from 'react-bootstrap/Carousel'
 
 import GenerationDisplay from './components/generationDisplay'
-import GenerationSettings from './components/generationSettings'
+import GenerationSettings from './components/GenerationSettings'
+
 import mainGenerate from "./fetch/mainGenerate"
+import { imageGenerate } from "./fetch/imageGenerate.js"
 
 import promptDataImport from './data/promptData'
 import durationDataImport from './data/durationData'
 
 import "./style/index.css"
+import { cancelGenerate } from './fetch/cancelGenerate'
 
 export default function App() {
   const [imageData, setImageData] = useState()
   const [loading, setLoading] = useState({
-    screen:false,
-    request:false
+    showLoadScreen:false,
+    makingRequest:false
   })
+  const [id, setId] = useState()
   const [durationData, setDurationData] = useState(durationDataImport)
   const [data, setData] = useState(promptDataImport)
 
-  function displayCallBack(checkData) {
-    setLoading(prevLoad => {
-      return {
-        ...prevLoad,
-        screen:false
-      }
-    })
-    if (checkData !== durationData) {
-      setDurationData({...checkData})
-    }
-  }
-
-  function cancelGenerationRequestCall() {
-    setDurationData(() => {return {...durationDataImport, faulted:true}})
-    setLoading({
-      screen:false,
-      request:false
-    })
-  }
-
-  function resetButtonClicked() {
-    setData(promptDataImport)
-  }
-
   async function generateButtonClicked() {
-    if (!loading.request) {
+    // Already loading? If not, check prompt
+    if (!loading.makingRequest) {
       if (data.prompt) {
-  
+
         //Image reset and loading animation
         setImageData("")
         setLoading(prevLoad => {
           return {
             ...prevLoad,
-            screen:true,
-            request:true
+            showLoadScreen:true,
+            makingRequest:true
           }
         })
-  
-        //Waiting for image
-        let imageLinks = await mainGenerate(data, displayCallBack)
         
         try {
-          if (imageLinks.message) throw new Error
-
-          setImageData(imageLinks.map(e => {
-            return (
-              <Carousel.Item>
-                <img alt="Generated picture" src={e.img}/>
-              </Carousel.Item>
-            )
-          }))
-  
-          setLoading(prevLoad => {
-            return {
-              ...prevLoad,
-              request:false
-            }
-          })
+          //Making initial call
+          const tempImageData = await imageGenerate("L15qrkaHUZU7qbAUlkIlXA", data)
+          console.log(tempImageData)
+          
+          //Saving ID
+          if (tempImageData.id) setId(tempImageData.id)
+          else throw new Error (tempImageData.message)
+          
         }
-        catch(error){
-          console.log(error)
-          cancelGenerationRequestCall()
-          alert("Error! " + imageLinks.message)
+        catch (error) {
+          alert(error)
+          resetRequestDisplay()
         }
       }
       else alert("Please enter a legitimate prompt!")
     }
-    else alert("Already making a request! Please wait or refresh the page to cancel.")
+    //Call cancelation
+    else if (confirm("This will cancel your request. Are you sure?")) {
+      cancelGenerate(id)
+      resetRequestDisplay()
+    }
+  }
+
+  //Repeat when ID changes
+  useEffect(() => {
+    console.log(id)
+    async function startCheckProcess() {
+      let tempImageData
+      try {
+        tempImageData = await mainGenerate(id, displayCallBack)
+        if (tempImageData) {
+          setImageData(tempImageData.map(e => {
+            return (
+              <Carousel.Item key="">
+                <img alt="Generated picture" src={e.img}/>
+              </Carousel.Item>
+            )
+          }))
+        }
+      }
+      catch (error) {
+        console.log(error)
+        if (tempImageData.message) alert(tempImageData.message)
+      }
+  
+      //Loading screen reset
+      setLoading(prevLoad => {return {...prevLoad, makingRequest:false}})
+    }
+    if (id) startCheckProcess()
+  }, [id])
+
+  function resetRequestDisplay() {
+    setLoading(prevLoading => {return {...prevLoading, makingRequest:false, showLoadScreen:false}})
+    setDurationData(durationDataImport)
+  }
+
+  // Duration update
+  function displayCallBack(checkData) {
+    if (loading.showLoadScreen) {
+      setLoading(prevLoad => {
+        return {
+          ...prevLoad,
+          showLoadScreen:false
+        }
+      })
+    }
+    if (checkData !== durationData) {
+      setDurationData({...checkData})
+    }
+  }
+
+  //Settings reset
+  function resetButtonClicked() {
+    setData(promptDataImport)
   }
 
   //Settings update on change
@@ -126,15 +152,3 @@ export default function App() {
     </>
   )
 }
-
-{/* <div id="generationDisplay-div">
-    <div className="imageDisplay-div">
-      <ControlledCarousel imageData={imageData}/>
-      <div>Hello!</div>
-    </div>
-    <div className="controlDisplay-div">
-        <button id="generate-button" onClick={generateButtonClicked}>Generate</button>
-        <span id="duration-display">Time left: {durationData.wait_time}</span>
-        <span id="queue-display">Queue position: {durationData.queue_position}</span>
-    </div>
-</div> */}

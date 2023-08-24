@@ -1,12 +1,12 @@
 export default async function getModels() {
   let apiLink = "https://stablehorde.net/api/v2/status/models"
-  console.log("Getting data from " + apiLink)
+  console.log("Updating model data")
 
   //Fetching info
   let response = await fetch(apiLink)
   response = await response.json()
 
-  console.log(response)
+  // console.log(response)
   return response
 }
 

@@ -12046,6 +12046,9 @@ body {
   gap: 10px;
   padding: 10px 0;
 }
+#root #mainContent-section #generationSettings-div .textInput-div textarea:not([name=seedInput]) {
+  min-height: 84px;
+}
 @media screen and (min-width: 1025px) {
   #root #mainContent-section #generationSettings-div .textInput-div:first-child {
     border-top: none;
@@ -12088,9 +12091,10 @@ body {
   min-width: 92px;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div {
-  display: inline-block;
   position: relative;
   width: 100%;
+  min-height: 100%;
+  max-height: 512px;
   border: solid #adb5bd 1px;
   border-radius: 5px;
   background: radial-gradient(circle, hsl(211, 12%, 37%) 0%, hsl(210, 10%, 23%) 100%);
@@ -12100,16 +12104,23 @@ body {
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide {
   position: absolute;
+  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
 }
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-control-next, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-control-prev, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-indicators, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-control-next, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-control-prev, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-indicators {
   display: none;
 }
-#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img {
-  width: 100%;
+#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner {
   height: 100%;
-  position: relative;
+}
+#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item {
+  height: 100%;
+}
+#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img {
+  width: 100% !important;
+  height: 100% !important;
   -o-object-position: center;
      object-position: center;
   -o-object-fit: scale-down;
@@ -12161,6 +12172,9 @@ body {
   }
   #root #mainContent-section #generationDisplay-div .controlDisplay-div {
     margin: 0;
+  }
+  #root #mainContent-section #generationDisplay-div img {
+    max-height: 700px;
   }
 }
 @media only screen and (min-width: 490px) {
